@@ -1,37 +1,22 @@
-name: "update wiki"
-
-# Run on changes to the `doc` directory on the `master` branch
 on:
-  push:
-    branches:
-      - master
-  
-    
-    paths:
-      - 'doc/**'
-
-  workflow_dispatch:
+    push:
+        branches:
+            - master
+    pull_request:
+        branches:
+            - master
+name: Wiki Sync
 jobs:
-  mirror:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout main
-        uses: actions/checkout@v2
-        with:
-          path: workflow-practice
-      - name: Checkout wiki
-        uses: actions/checkout@v2
-        with:
-          repository: "CaptCardoso/workflow-practice.wiki"
-          path: workflow-practice.wiki
-      - name: Copy files
-        run: |
-          git config --global user.email "actions@github.com"
-          git config --global user.name "Wiki mirror"
-          cp $GITHUB_WORKSPACE/workflow-practice/doc/*.md $GITHUB_WORKSPACE/workflow-practice.wiki
-          cd $GITHUB_WORKSPACE/workflow-practice.wiki 
-          #rename.ul -v .txt .md *.txt
-          git add .
-          # only commit if there are changes
-          git diff-index --quiet HEAD -- || git commit -m "sync from doc/"
-          git push
+    update-wiki:
+        runs-on: ubuntu-latest
+        steps:
+          - uses: actions/checkout@master
+          - name: Sync Wiki
+            uses: joeizzard/action-wiki-sync@master
+            with:
+                username: example
+                access_token: ${{ secrets.GITHUB_TOKEN }}
+                wiki_folder: doc
+                commit_username: 'CaptCardoso'
+                commit_email: 'github-actions@github.com'
+                commit_message: 'action: wiki sync'
