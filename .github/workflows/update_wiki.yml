@@ -26,8 +26,7 @@ jobs:
           git config --global user.email "actions@github.com"
           git config --global user.name "Wiki mirror"
           cp $GITHUB_WORKSPACE/workflow-practice/doc/*.txt $GITHUB_WORKSPACE/workflow-practice.wiki
-          cd $GITHUB_WORKSPACE/workflow-practice.wiki
-          rename.ul -v .txt .md *.txt
+          cd $GITHUB_WORKSPACE/workflow-practice.wiki rename.ul -v .txt .md *.txt
           git add .
           # only commit if there are changes
           git diff-index --quiet HEAD -- || git commit -m "sync from doc/"
