@@ -19,4 +19,4 @@ jobs:
                 wiki_folder: doc
                 commit_username: 'CaptCardoso'
                 commit_email: 'github-actions@github.com'
-                commit_message: 'action: wiki sync'
+                commit_message: 'action: wiki doc sync'
