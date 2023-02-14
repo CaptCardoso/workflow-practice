@@ -15,7 +15,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: ${{github.repository}}.wiki
-        path: markdown
+        path: Documentation
     - name: Push to wiki
       run: |
         cd markdown
